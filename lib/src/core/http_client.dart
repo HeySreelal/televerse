@@ -177,7 +177,16 @@ class DioHttpClient implements HttpClient {
   ) async {
     final formData = FormData();
 
-    final encoded = jsonEncode(payload.params);
+    // Filter out InputFile objects from params before encoding
+    // They are handled separately as file uploads
+    final filteredParams = <String, dynamic>{};
+    payload.params.forEach((key, value) {
+      if (value != null && value is! InputFile) {
+        filteredParams[key] = value;
+      }
+    });
+
+    final encoded = jsonEncode(filteredParams);
     final decoded = (jsonDecode(encoded) as Map<String, dynamic>);
     (decoded).forEach((key, value) {
       if (value == null) return;
