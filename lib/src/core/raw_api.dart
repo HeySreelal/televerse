@@ -5025,4 +5025,143 @@ class RawAPI {
       payload,
     );
   }
+
+  /// Use this method to edit an ephemeral text message. Note that it is not
+  /// guaranteed that the user will receive the message edit event, especially
+  /// if they are offline. On success, True is returned.
+  ///
+  /// See: https://core.telegram.org/bots/api#editephemeralmessagetext
+  Future<bool> editEphemeralMessageText(
+    ID chatId,
+    int receiverUserId,
+    int ephemeralMessageId,
+    String text, {
+    ParseMode? parseMode,
+    List<MessageEntity>? entities,
+    LinkPreviewOptions? linkPreviewOptions,
+    InlineKeyboardMarkup? replyMarkup,
+  }) async {
+    final params = <String, dynamic>{
+      'chat_id': chatId,
+      'receiver_user_id': receiverUserId,
+      'ephemeral_message_id': ephemeralMessageId,
+      'text': text,
+      'parse_mode': ?parseMode,
+      'entities': ?entities,
+      'link_preview_options': ?linkPreviewOptions,
+      'reply_markup': ?replyMarkup,
+    };
+
+    final payload = Payload(params);
+    return await _makeRequest<bool>(
+      APIMethod.editEphemeralMessageText.name,
+      payload,
+    );
+  }
+
+  /// Use this method to edit the media of an ephemeral message. Note that it is
+  /// not guaranteed that the user will receive the message edit event, especially
+  /// if they are offline. On success, True is returned.
+  ///
+  /// See: https://core.telegram.org/bots/api#editephemeralmessagemedia
+  Future<bool> editEphemeralMessageMedia(
+    ID chatId,
+    int receiverUserId,
+    int ephemeralMessageId,
+    InputMedia media, {
+    InlineKeyboardMarkup? replyMarkup,
+  }) async {
+    final params = <String, dynamic>{
+      'chat_id': chatId,
+      'receiver_user_id': receiverUserId,
+      'ephemeral_message_id': ephemeralMessageId,
+      'media': media,
+      'reply_markup': ?replyMarkup,
+    };
+
+    final payload = Payload(params);
+    return await _makeRequest<bool>(
+      APIMethod.editEphemeralMessageMedia.name,
+      payload,
+    );
+  }
+
+  /// Use this method to edit the caption of an ephemeral message. Note that it
+  /// is not guaranteed that the user will receive the message edit event,
+  /// especially if they are offline. On success, True is returned.
+  ///
+  /// See: https://core.telegram.org/bots/api#editephemeralmessagecaption
+  Future<bool> editEphemeralMessageCaption(
+    ID chatId,
+    int receiverUserId,
+    int ephemeralMessageId, {
+    String? caption,
+    ParseMode? parseMode,
+    List<MessageEntity>? captionEntities,
+    InlineKeyboardMarkup? replyMarkup,
+  }) async {
+    final params = <String, dynamic>{
+      'chat_id': chatId,
+      'receiver_user_id': receiverUserId,
+      'ephemeral_message_id': ephemeralMessageId,
+      'caption': ?caption,
+      'parse_mode': ?parseMode,
+      'caption_entities': ?captionEntities,
+      'reply_markup': ?replyMarkup,
+    };
+
+    final payload = Payload(params);
+    return await _makeRequest<bool>(
+      APIMethod.editEphemeralMessageCaption.name,
+      payload,
+    );
+  }
+
+  /// Use this method to edit only the reply markup of an ephemeral message. Note
+  /// that it is not guaranteed that the user will receive the message edit event,
+  /// especially if they are offline. On success, True is returned.
+  ///
+  /// See: https://core.telegram.org/bots/api#editephemeralmessagereplymarkup
+  Future<bool> editEphemeralMessageReplyMarkup(
+    ID chatId,
+    int receiverUserId,
+    int ephemeralMessageId, {
+    InlineKeyboardMarkup? replyMarkup,
+  }) async {
+    final params = <String, dynamic>{
+      'chat_id': chatId,
+      'receiver_user_id': receiverUserId,
+      'ephemeral_message_id': ephemeralMessageId,
+      'reply_markup': ?replyMarkup,
+    };
+
+    final payload = Payload(params);
+    return await _makeRequest<bool>(
+      APIMethod.editEphemeralMessageReplyMarkup.name,
+      payload,
+    );
+  }
+
+  /// Use this method to delete an ephemeral message. Note that it is not
+  /// guaranteed that the user will receive the message deletion event,
+  /// especially if they are offline. Returns True on success.
+  ///
+  /// See: https://core.telegram.org/bots/api#deleteephemeralmessage
+  Future<bool> deleteEphemeralMessage(
+    ID chatId,
+    int receiverUserId,
+    int ephemeralMessageId,
+  ) async {
+    final params = <String, dynamic>{
+      'chat_id': chatId,
+      'receiver_user_id': receiverUserId,
+      'ephemeral_message_id': ephemeralMessageId,
+    };
+
+    final payload = Payload(params);
+    return await _makeRequest<bool>(
+      APIMethod.deleteEphemeralMessage.name,
+      payload,
+    );
+  }
 }

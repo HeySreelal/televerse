@@ -540,7 +540,22 @@ enum APIMethod {
   setManagedBotAccessSettings,
 
   /// Use this method to get the last messages from the personal chat of a given user.
-  getUserPersonalChatMessages;
+  getUserPersonalChatMessages,
+
+  /// Use this method to edit an ephemeral text message.
+  editEphemeralMessageText,
+
+  /// Use this method to edit the media of an ephemeral message.
+  editEphemeralMessageMedia,
+
+  /// Use this method to edit the caption of an ephemeral message.
+  editEphemeralMessageCaption,
+
+  /// Use this method to edit only the reply markup of an ephemeral message.
+  editEphemeralMessageReplyMarkup,
+
+  /// Use this method to delete an ephemeral message.
+  deleteEphemeralMessage;
 
   /// Returns the name of the API method as a string, matching the Telegram Bot API endpoint.
   String get name => toString().split('.').last;
