@@ -701,6 +701,9 @@ class Filters<CTX extends Context> {
   /// Filter that matches paid media with photos.
   PaidMediaPhotoFilter<CTX> get paidMediaPhoto => PaidMediaPhotoFilter<CTX>();
 
+  /// Filter that matches subscription updates.
+  SubscriptionFilter<CTX> get subscription => SubscriptionFilter<CTX>();
+
   // ===============================
   // Reaction Factory Methods
   // ===============================

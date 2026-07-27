@@ -230,6 +230,11 @@ class Context {
   /// This will be non-null for guest messages.
   Message? get guestMessage => update.guestMessage;
 
+  /// The user payment subscription update from the update, if any.
+  ///
+  /// This will be non-null when a user payment subscription has changed.
+  BotSubscriptionUpdated? get subscription => update.subscription;
+
   /// The Chat ID quick getter.
   ChatID get id {
     final id = _getChatId();
@@ -287,6 +292,7 @@ class Context {
           chosenInlineResult?.from ??
           shippingQuery?.from ??
           preCheckoutQuery?.from ??
+          subscription?.user ??
           msg?.from;
       _fromCached = true;
     }

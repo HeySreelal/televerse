@@ -1,3 +1,8 @@
+# 3.6.0
+
+- Bot API 10.2
+- Fixes an issue with InputFile that caused API call failure on different send methods. Thanks to [@devsdocs over #364](https://github.com/theweaverlabs/televerse/pull/364)
+
 # 3.5.2
 
 - Fix: added missing `InputFile` parameters to RawAPI methods (`sendDocument`, `sendVideo`, `sendAnimation`, `sendVoice`, `sendVideoNote`).

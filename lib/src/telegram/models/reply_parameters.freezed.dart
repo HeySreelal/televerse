@@ -14,29 +14,40 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$ReplyParameters {
   /// Identifier of the message that will be replied to in the current chat,
-  /// or in the chat chat_id if it is specified.
+  /// or in the chat chat_id if it is specified. Required if
+  /// ephemeral_message_id isn't specified.
   @JsonKey(name: 'message_id')
-  int get messageId;
+  int? get messageId;
 
   /// If the message to be replied to is from a different chat, unique
-  /// identifier for the chat or username of the channel (in the format
-  /// @channelusername). Not supported for messages sent on behalf of a
-  /// business account and messages from channel direct messages chats.
+  /// identifier for the chat or username of the bot, supergroup or channel
+  /// in the format @username. Not supported for messages sent on behalf of a
+  /// business account, messages from channel direct messages chats and
+  /// ephemeral messages.
   @IDConverter()
   @JsonKey(name: 'chat_id')
   ID? get chatId;
 
+  /// Identifier of the incoming ephemeral message that will be replied to in
+  /// the current chat. A reply to an ephemeral message must itself be an
+  /// ephemeral message. An ephemeral message may only be replied to within
+  /// 15 seconds of being sent. Required if message_id isn't specified.
+  @JsonKey(name: 'ephemeral_message_id')
+  int? get ephemeralMessageId;
+
   /// Pass True if the message should be sent even if the specified message to
   /// be replied to is not found. Always False for replies in another chat or
-  /// forum topic. Always True for messages sent on behalf of a business account.
+  /// forum topic, and sent ephemeral messages. Always True for messages sent
+  /// on behalf of a business account.
   @JsonKey(name: 'allow_sending_without_reply')
   bool? get allowSendingWithoutReply;
 
   /// Quoted part of the message to be replied to; 0-1024 characters after
   /// entities parsing. The quote must be an exact substring of the message to
   /// be replied to, including bold, italic, underline, strikethrough,
-  /// spoiler, and custom_emoji entities. The message will fail to send if the
-  /// quote isn't found in the original message.
+  /// spoiler, custom_emoji, and date_time entities. The message will fail to
+  /// send if the quote isn't found in the original message. Ignored for
+  /// ephemeral messages.
   @JsonKey(name: 'quote')
   String? get quote;
 
@@ -58,6 +69,10 @@ mixin _$ReplyParameters {
   @JsonKey(name: 'checklist_task_id')
   int? get checklistTaskId;
 
+  /// Persistent identifier of the specific poll option to be replied to.
+  @JsonKey(name: 'poll_option_id')
+  String? get pollOptionId;
+
   /// Create a copy of ReplyParameters
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -73,7 +88,7 @@ mixin _$ReplyParameters {
 
   @override
   String toString() {
-    return 'ReplyParameters(messageId: $messageId, chatId: $chatId, allowSendingWithoutReply: $allowSendingWithoutReply, quote: $quote, quoteParseMode: $quoteParseMode, quoteEntities: $quoteEntities, quotePosition: $quotePosition, checklistTaskId: $checklistTaskId)';
+    return 'ReplyParameters(messageId: $messageId, chatId: $chatId, ephemeralMessageId: $ephemeralMessageId, allowSendingWithoutReply: $allowSendingWithoutReply, quote: $quote, quoteParseMode: $quoteParseMode, quoteEntities: $quoteEntities, quotePosition: $quotePosition, checklistTaskId: $checklistTaskId, pollOptionId: $pollOptionId)';
   }
 }
 
@@ -85,8 +100,9 @@ abstract mixin class $ReplyParametersCopyWith<$Res> {
   ) = _$ReplyParametersCopyWithImpl;
   @useResult
   $Res call({
-    @JsonKey(name: 'message_id') int messageId,
+    @JsonKey(name: 'message_id') int? messageId,
     @IDConverter() @JsonKey(name: 'chat_id') ID? chatId,
+    @JsonKey(name: 'ephemeral_message_id') int? ephemeralMessageId,
     @JsonKey(name: 'allow_sending_without_reply')
     bool? allowSendingWithoutReply,
     @JsonKey(name: 'quote') String? quote,
@@ -94,6 +110,7 @@ abstract mixin class $ReplyParametersCopyWith<$Res> {
     @JsonKey(name: 'quote_entities') List<MessageEntity>? quoteEntities,
     @JsonKey(name: 'quote_position') int? quotePosition,
     @JsonKey(name: 'checklist_task_id') int? checklistTaskId,
+    @JsonKey(name: 'poll_option_id') String? pollOptionId,
   });
 }
 
@@ -110,25 +127,31 @@ class _$ReplyParametersCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? messageId = null,
+    Object? messageId = freezed,
     Object? chatId = freezed,
+    Object? ephemeralMessageId = freezed,
     Object? allowSendingWithoutReply = freezed,
     Object? quote = freezed,
     Object? quoteParseMode = freezed,
     Object? quoteEntities = freezed,
     Object? quotePosition = freezed,
     Object? checklistTaskId = freezed,
+    Object? pollOptionId = freezed,
   }) {
     return _then(
       _self.copyWith(
-        messageId: null == messageId
+        messageId: freezed == messageId
             ? _self.messageId
             : messageId // ignore: cast_nullable_to_non_nullable
-                  as int,
+                  as int?,
         chatId: freezed == chatId
             ? _self.chatId
             : chatId // ignore: cast_nullable_to_non_nullable
                   as ID?,
+        ephemeralMessageId: freezed == ephemeralMessageId
+            ? _self.ephemeralMessageId
+            : ephemeralMessageId // ignore: cast_nullable_to_non_nullable
+                  as int?,
         allowSendingWithoutReply: freezed == allowSendingWithoutReply
             ? _self.allowSendingWithoutReply
             : allowSendingWithoutReply // ignore: cast_nullable_to_non_nullable
@@ -153,6 +176,10 @@ class _$ReplyParametersCopyWithImpl<$Res>
             ? _self.checklistTaskId
             : checklistTaskId // ignore: cast_nullable_to_non_nullable
                   as int?,
+        pollOptionId: freezed == pollOptionId
+            ? _self.pollOptionId
+            : pollOptionId // ignore: cast_nullable_to_non_nullable
+                  as String?,
       ),
     );
   }
@@ -242,36 +269,49 @@ extension ReplyParametersPatterns on ReplyParameters {
 @JsonSerializable()
 class _ReplyParameters implements ReplyParameters {
   const _ReplyParameters({
-    @JsonKey(name: 'message_id') required this.messageId,
+    @JsonKey(name: 'message_id') this.messageId,
     @IDConverter() @JsonKey(name: 'chat_id') this.chatId,
+    @JsonKey(name: 'ephemeral_message_id') this.ephemeralMessageId,
     @JsonKey(name: 'allow_sending_without_reply') this.allowSendingWithoutReply,
     @JsonKey(name: 'quote') this.quote,
     @JsonKey(name: 'quote_parse_mode') this.quoteParseMode,
     @JsonKey(name: 'quote_entities') final List<MessageEntity>? quoteEntities,
     @JsonKey(name: 'quote_position') this.quotePosition,
     @JsonKey(name: 'checklist_task_id') this.checklistTaskId,
+    @JsonKey(name: 'poll_option_id') this.pollOptionId,
   }) : _quoteEntities = quoteEntities;
   factory _ReplyParameters.fromJson(Map<String, dynamic> json) =>
       _$ReplyParametersFromJson(json);
 
   /// Identifier of the message that will be replied to in the current chat,
-  /// or in the chat chat_id if it is specified.
+  /// or in the chat chat_id if it is specified. Required if
+  /// ephemeral_message_id isn't specified.
   @override
   @JsonKey(name: 'message_id')
-  final int messageId;
+  final int? messageId;
 
   /// If the message to be replied to is from a different chat, unique
-  /// identifier for the chat or username of the channel (in the format
-  /// @channelusername). Not supported for messages sent on behalf of a
-  /// business account and messages from channel direct messages chats.
+  /// identifier for the chat or username of the bot, supergroup or channel
+  /// in the format @username. Not supported for messages sent on behalf of a
+  /// business account, messages from channel direct messages chats and
+  /// ephemeral messages.
   @override
   @IDConverter()
   @JsonKey(name: 'chat_id')
   final ID? chatId;
 
+  /// Identifier of the incoming ephemeral message that will be replied to in
+  /// the current chat. A reply to an ephemeral message must itself be an
+  /// ephemeral message. An ephemeral message may only be replied to within
+  /// 15 seconds of being sent. Required if message_id isn't specified.
+  @override
+  @JsonKey(name: 'ephemeral_message_id')
+  final int? ephemeralMessageId;
+
   /// Pass True if the message should be sent even if the specified message to
   /// be replied to is not found. Always False for replies in another chat or
-  /// forum topic. Always True for messages sent on behalf of a business account.
+  /// forum topic, and sent ephemeral messages. Always True for messages sent
+  /// on behalf of a business account.
   @override
   @JsonKey(name: 'allow_sending_without_reply')
   final bool? allowSendingWithoutReply;
@@ -279,8 +319,9 @@ class _ReplyParameters implements ReplyParameters {
   /// Quoted part of the message to be replied to; 0-1024 characters after
   /// entities parsing. The quote must be an exact substring of the message to
   /// be replied to, including bold, italic, underline, strikethrough,
-  /// spoiler, and custom_emoji entities. The message will fail to send if the
-  /// quote isn't found in the original message.
+  /// spoiler, custom_emoji, and date_time entities. The message will fail to
+  /// send if the quote isn't found in the original message. Ignored for
+  /// ephemeral messages.
   @override
   @JsonKey(name: 'quote')
   final String? quote;
@@ -317,6 +358,11 @@ class _ReplyParameters implements ReplyParameters {
   @JsonKey(name: 'checklist_task_id')
   final int? checklistTaskId;
 
+  /// Persistent identifier of the specific poll option to be replied to.
+  @override
+  @JsonKey(name: 'poll_option_id')
+  final String? pollOptionId;
+
   /// Create a copy of ReplyParameters
   /// with the given fields replaced by the non-null parameter values.
   @override
@@ -332,7 +378,7 @@ class _ReplyParameters implements ReplyParameters {
 
   @override
   String toString() {
-    return 'ReplyParameters(messageId: $messageId, chatId: $chatId, allowSendingWithoutReply: $allowSendingWithoutReply, quote: $quote, quoteParseMode: $quoteParseMode, quoteEntities: $quoteEntities, quotePosition: $quotePosition, checklistTaskId: $checklistTaskId)';
+    return 'ReplyParameters(messageId: $messageId, chatId: $chatId, ephemeralMessageId: $ephemeralMessageId, allowSendingWithoutReply: $allowSendingWithoutReply, quote: $quote, quoteParseMode: $quoteParseMode, quoteEntities: $quoteEntities, quotePosition: $quotePosition, checklistTaskId: $checklistTaskId, pollOptionId: $pollOptionId)';
   }
 }
 
@@ -346,8 +392,9 @@ abstract mixin class _$ReplyParametersCopyWith<$Res>
   @override
   @useResult
   $Res call({
-    @JsonKey(name: 'message_id') int messageId,
+    @JsonKey(name: 'message_id') int? messageId,
     @IDConverter() @JsonKey(name: 'chat_id') ID? chatId,
+    @JsonKey(name: 'ephemeral_message_id') int? ephemeralMessageId,
     @JsonKey(name: 'allow_sending_without_reply')
     bool? allowSendingWithoutReply,
     @JsonKey(name: 'quote') String? quote,
@@ -355,6 +402,7 @@ abstract mixin class _$ReplyParametersCopyWith<$Res>
     @JsonKey(name: 'quote_entities') List<MessageEntity>? quoteEntities,
     @JsonKey(name: 'quote_position') int? quotePosition,
     @JsonKey(name: 'checklist_task_id') int? checklistTaskId,
+    @JsonKey(name: 'poll_option_id') String? pollOptionId,
   });
 }
 
@@ -371,25 +419,31 @@ class __$ReplyParametersCopyWithImpl<$Res>
   @override
   @pragma('vm:prefer-inline')
   $Res call({
-    Object? messageId = null,
+    Object? messageId = freezed,
     Object? chatId = freezed,
+    Object? ephemeralMessageId = freezed,
     Object? allowSendingWithoutReply = freezed,
     Object? quote = freezed,
     Object? quoteParseMode = freezed,
     Object? quoteEntities = freezed,
     Object? quotePosition = freezed,
     Object? checklistTaskId = freezed,
+    Object? pollOptionId = freezed,
   }) {
     return _then(
       _ReplyParameters(
-        messageId: null == messageId
+        messageId: freezed == messageId
             ? _self.messageId
             : messageId // ignore: cast_nullable_to_non_nullable
-                  as int,
+                  as int?,
         chatId: freezed == chatId
             ? _self.chatId
             : chatId // ignore: cast_nullable_to_non_nullable
                   as ID?,
+        ephemeralMessageId: freezed == ephemeralMessageId
+            ? _self.ephemeralMessageId
+            : ephemeralMessageId // ignore: cast_nullable_to_non_nullable
+                  as int?,
         allowSendingWithoutReply: freezed == allowSendingWithoutReply
             ? _self.allowSendingWithoutReply
             : allowSendingWithoutReply // ignore: cast_nullable_to_non_nullable
@@ -414,6 +468,10 @@ class __$ReplyParametersCopyWithImpl<$Res>
             ? _self.checklistTaskId
             : checklistTaskId // ignore: cast_nullable_to_non_nullable
                   as int?,
+        pollOptionId: freezed == pollOptionId
+            ? _self.pollOptionId
+            : pollOptionId // ignore: cast_nullable_to_non_nullable
+                  as String?,
       ),
     );
   }

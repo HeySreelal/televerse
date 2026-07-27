@@ -367,6 +367,20 @@ _Message _$MessageFromJson(Map<String, dynamic> json) => _Message(
   richMessage: json['rich_message'] == null
       ? null
       : RichMessage.fromJson(json['rich_message'] as Map<String, dynamic>),
+  receiverUser: json['receiver_user'] == null
+      ? null
+      : User.fromJson(json['receiver_user'] as Map<String, dynamic>),
+  ephemeralMessageId: (json['ephemeral_message_id'] as num?)?.toInt(),
+  communityChatAdded: json['community_chat_added'] == null
+      ? null
+      : CommunityChatAdded.fromJson(
+          json['community_chat_added'] as Map<String, dynamic>,
+        ),
+  communityChatRemoved: json['community_chat_removed'] == null
+      ? null
+      : CommunityChatRemoved.fromJson(
+          json['community_chat_removed'] as Map<String, dynamic>,
+        ),
 );
 
 Map<String, dynamic> _$MessageToJson(_Message instance) => <String, dynamic>{
@@ -482,4 +496,8 @@ Map<String, dynamic> _$MessageToJson(_Message instance) => <String, dynamic>{
   'guest_query_id': ?instance.guestQueryId,
   'live_photo': ?instance.livePhoto,
   'rich_message': ?instance.richMessage,
+  'receiver_user': ?instance.receiverUser,
+  'ephemeral_message_id': ?instance.ephemeralMessageId,
+  'community_chat_added': ?instance.communityChatAdded,
+  'community_chat_removed': ?instance.communityChatRemoved,
 };

@@ -179,12 +179,10 @@ class DioHttpClient implements HttpClient {
 
     // Filter out InputFile objects from params before encoding
     // They are handled separately as file uploads
-    final filteredParams = <String, dynamic>{};
-    payload.params.forEach((key, value) {
-      if (value != null && value is! InputFile) {
-        filteredParams[key] = value;
-      }
-    });
+    final filteredParams = {
+      for (final MapEntry(:key, :value) in payload.params.entries)
+        if (value != null && value is! InputFile) key: value,
+    };
 
     final encoded = jsonEncode(filteredParams);
     final decoded = (jsonDecode(encoded) as Map<String, dynamic>);

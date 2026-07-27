@@ -40,4 +40,8 @@ enum InputMediaType {
   /// For an HTTP link to send.
   @JsonValue('link')
   link,
+
+  /// For a voice note to send.
+  @JsonValue('voice_note')
+  voiceNote,
 }

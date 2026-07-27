@@ -12,26 +12,36 @@ abstract class ReplyParameters with _$ReplyParameters {
   /// Constructs a `ReplyParameters`.
   const factory ReplyParameters({
     /// Identifier of the message that will be replied to in the current chat,
-    /// or in the chat chat_id if it is specified.
-    @JsonKey(name: 'message_id') required int messageId,
+    /// or in the chat chat_id if it is specified. Required if
+    /// ephemeral_message_id isn't specified.
+    @JsonKey(name: 'message_id') int? messageId,
 
     /// If the message to be replied to is from a different chat, unique
-    /// identifier for the chat or username of the channel (in the format
-    /// @channelusername). Not supported for messages sent on behalf of a
-    /// business account and messages from channel direct messages chats.
+    /// identifier for the chat or username of the bot, supergroup or channel
+    /// in the format @username. Not supported for messages sent on behalf of a
+    /// business account, messages from channel direct messages chats and
+    /// ephemeral messages.
     @IDConverter() @JsonKey(name: 'chat_id') ID? chatId,
+
+    /// Identifier of the incoming ephemeral message that will be replied to in
+    /// the current chat. A reply to an ephemeral message must itself be an
+    /// ephemeral message. An ephemeral message may only be replied to within
+    /// 15 seconds of being sent. Required if message_id isn't specified.
+    @JsonKey(name: 'ephemeral_message_id') int? ephemeralMessageId,
 
     /// Pass True if the message should be sent even if the specified message to
     /// be replied to is not found. Always False for replies in another chat or
-    /// forum topic. Always True for messages sent on behalf of a business account.
+    /// forum topic, and sent ephemeral messages. Always True for messages sent
+    /// on behalf of a business account.
     @JsonKey(name: 'allow_sending_without_reply')
     bool? allowSendingWithoutReply,
 
     /// Quoted part of the message to be replied to; 0-1024 characters after
     /// entities parsing. The quote must be an exact substring of the message to
     /// be replied to, including bold, italic, underline, strikethrough,
-    /// spoiler, and custom_emoji entities. The message will fail to send if the
-    /// quote isn't found in the original message.
+    /// spoiler, custom_emoji, and date_time entities. The message will fail to
+    /// send if the quote isn't found in the original message. Ignored for
+    /// ephemeral messages.
     @JsonKey(name: 'quote') String? quote,
 
     /// Mode for parsing entities in the quote. See formatting options for more
@@ -47,6 +57,9 @@ abstract class ReplyParameters with _$ReplyParameters {
 
     /// Identifier of the specific checklist task to be replied to.
     @JsonKey(name: 'checklist_task_id') int? checklistTaskId,
+
+    /// Persistent identifier of the specific poll option to be replied to.
+    @JsonKey(name: 'poll_option_id') String? pollOptionId,
   }) = _ReplyParameters;
 
   /// Creates a `ReplyParameters` object from a JSON object.

@@ -796,6 +796,16 @@ class Composer<CTX extends Context> {
     return on(PurchasedPaidMediaFilter<CTX>(), handler);
   }
 
+  /// Adds a handler for user payment subscription updates.
+  Composer<CTX> onSubscription(UpdateHandler<CTX> handler) {
+    return on(SubscriptionFilter<CTX>(), handler);
+  }
+
+  /// Adds a handler for user payment subscription updates (alias for [onSubscription]).
+  Composer<CTX> subscription(UpdateHandler<CTX> handler) {
+    return onSubscription(handler);
+  }
+
   // ===============================
   // Enhanced Convenience Methods
   // ===============================

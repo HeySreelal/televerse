@@ -12,6 +12,14 @@ _InputRichMessage _$InputRichMessageFromJson(Map<String, dynamic> json) =>
       markdown: json['markdown'] as String?,
       isRtl: json['is_rtl'] as bool?,
       skipEntityDetection: json['skip_entity_detection'] as bool?,
+      media: (json['media'] as List<dynamic>?)
+          ?.map(
+            (e) => InputRichMessageMedia.fromJson(e as Map<String, dynamic>),
+          )
+          .toList(),
+      blocks: (json['blocks'] as List<dynamic>?)
+          ?.map((e) => InputRichBlock.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$InputRichMessageToJson(_InputRichMessage instance) =>
@@ -20,4 +28,6 @@ Map<String, dynamic> _$InputRichMessageToJson(_InputRichMessage instance) =>
       'markdown': ?instance.markdown,
       'is_rtl': ?instance.isRtl,
       'skip_entity_detection': ?instance.skipEntityDetection,
+      'media': ?instance.media,
+      'blocks': ?instance.blocks,
     };

@@ -10,6 +10,30 @@ part of 'input_media.dart';
 // **************************************************************************
 
 T _$identity<T>(T value) => value;
+InputMedia _$InputMediaFromJson(Map<String, dynamic> json) {
+  switch (json['type']) {
+    case 'photo':
+      return InputMediaPhoto.fromJson(json);
+    case 'document':
+      return InputMediaDocument.fromJson(json);
+    case 'animation':
+      return InputMediaAnimation.fromJson(json);
+    case 'audio':
+      return InputMediaAudio.fromJson(json);
+    case 'video':
+      return InputMediaVideo.fromJson(json);
+    case 'voiceNote':
+      return InputMediaVoiceNote.fromJson(json);
+
+    default:
+      throw CheckedFromJsonException(
+        json,
+        'type',
+        'InputMedia',
+        'Invalid union type "${json['type']}"!',
+      );
+  }
+}
 
 /// @nodoc
 mixin _$InputMedia {
@@ -135,6 +159,7 @@ extension InputMediaPatterns on InputMedia {
     TResult Function(InputMediaAnimation value)? animation,
     TResult Function(InputMediaAudio value)? audio,
     TResult Function(InputMediaVideo value)? video,
+    TResult Function(InputMediaVoiceNote value)? voiceNote,
     required TResult orElse(),
   }) {
     final _that = this;
@@ -149,6 +174,8 @@ extension InputMediaPatterns on InputMedia {
         return audio(_that);
       case InputMediaVideo() when video != null:
         return video(_that);
+      case InputMediaVoiceNote() when voiceNote != null:
+        return voiceNote(_that);
       case _:
         return orElse();
     }
@@ -174,6 +201,7 @@ extension InputMediaPatterns on InputMedia {
     required TResult Function(InputMediaAnimation value) animation,
     required TResult Function(InputMediaAudio value) audio,
     required TResult Function(InputMediaVideo value) video,
+    required TResult Function(InputMediaVoiceNote value) voiceNote,
   }) {
     final _that = this;
     switch (_that) {
@@ -187,6 +215,8 @@ extension InputMediaPatterns on InputMedia {
         return audio(_that);
       case InputMediaVideo():
         return video(_that);
+      case InputMediaVoiceNote():
+        return voiceNote(_that);
     }
   }
 
@@ -209,6 +239,7 @@ extension InputMediaPatterns on InputMedia {
     TResult? Function(InputMediaAnimation value)? animation,
     TResult? Function(InputMediaAudio value)? audio,
     TResult? Function(InputMediaVideo value)? video,
+    TResult? Function(InputMediaVoiceNote value)? voiceNote,
   }) {
     final _that = this;
     switch (_that) {
@@ -222,6 +253,8 @@ extension InputMediaPatterns on InputMedia {
         return audio(_that);
       case InputMediaVideo() when video != null:
         return video(_that);
+      case InputMediaVoiceNote() when voiceNote != null:
+        return voiceNote(_that);
       case _:
         return null;
     }
@@ -229,7 +262,7 @@ extension InputMediaPatterns on InputMedia {
 }
 
 /// @nodoc
-@JsonSerializable(createFactory: false)
+@JsonSerializable()
 class InputMediaPhoto extends InputMedia {
   const InputMediaPhoto({
     @JsonKey(name: 'type') this.type = InputMediaType.photo,
@@ -242,6 +275,8 @@ class InputMediaPhoto extends InputMedia {
     @JsonKey(name: 'show_caption_above_media') this.showCaptionAboveMedia,
   }) : _captionEntities = captionEntities,
        super._();
+  factory InputMediaPhoto.fromJson(Map<String, dynamic> json) =>
+      _$InputMediaPhotoFromJson(json);
 
   /// Type of input media.
   @override
@@ -387,7 +422,7 @@ class _$InputMediaPhotoCopyWithImpl<$Res>
 }
 
 /// @nodoc
-@JsonSerializable(createFactory: false)
+@JsonSerializable()
 class InputMediaDocument extends InputMedia {
   const InputMediaDocument({
     @JsonKey(name: 'type') this.type = InputMediaType.document,
@@ -401,6 +436,8 @@ class InputMediaDocument extends InputMedia {
     this.disableContentTypeDetection,
   }) : _captionEntities = captionEntities,
        super._();
+  factory InputMediaDocument.fromJson(Map<String, dynamic> json) =>
+      _$InputMediaDocumentFromJson(json);
 
   /// Type of input media.
   @override
@@ -550,7 +587,7 @@ class _$InputMediaDocumentCopyWithImpl<$Res>
 }
 
 /// @nodoc
-@JsonSerializable(createFactory: false)
+@JsonSerializable()
 class InputMediaAnimation extends InputMedia {
   const InputMediaAnimation({
     @JsonKey(name: 'type') this.type = InputMediaType.animation,
@@ -567,6 +604,8 @@ class InputMediaAnimation extends InputMedia {
     @JsonKey(name: 'show_caption_above_media') this.showCaptionAboveMedia,
   }) : _captionEntities = captionEntities,
        super._();
+  factory InputMediaAnimation.fromJson(Map<String, dynamic> json) =>
+      _$InputMediaAnimationFromJson(json);
 
   /// Type of input media.
   @override
@@ -753,7 +792,7 @@ class _$InputMediaAnimationCopyWithImpl<$Res>
 }
 
 /// @nodoc
-@JsonSerializable(createFactory: false)
+@JsonSerializable()
 class InputMediaAudio extends InputMedia {
   const InputMediaAudio({
     @JsonKey(name: 'type') this.type = InputMediaType.audio,
@@ -768,6 +807,8 @@ class InputMediaAudio extends InputMedia {
     @JsonKey(name: 'title') this.title,
   }) : _captionEntities = captionEntities,
        super._();
+  factory InputMediaAudio.fromJson(Map<String, dynamic> json) =>
+      _$InputMediaAudioFromJson(json);
 
   /// Type of input media.
   @override
@@ -933,7 +974,7 @@ class _$InputMediaAudioCopyWithImpl<$Res>
 }
 
 /// @nodoc
-@JsonSerializable(createFactory: false)
+@JsonSerializable()
 class InputMediaVideo extends InputMedia {
   const InputMediaVideo({
     @JsonKey(name: 'type') this.type = InputMediaType.video,
@@ -953,6 +994,8 @@ class InputMediaVideo extends InputMedia {
     @JsonKey(name: 'cover') @InputFileConverter() this.cover,
   }) : _captionEntities = captionEntities,
        super._();
+  factory InputMediaVideo.fromJson(Map<String, dynamic> json) =>
+      _$InputMediaVideoFromJson(json);
 
   /// Type of input media.
   @override
@@ -1165,6 +1208,154 @@ class _$InputMediaVideoCopyWithImpl<$Res>
             ? _self.cover
             : cover // ignore: cast_nullable_to_non_nullable
                   as InputFile?,
+      ),
+    );
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class InputMediaVoiceNote extends InputMedia {
+  const InputMediaVoiceNote({
+    @JsonKey(name: 'type') this.type = InputMediaType.voiceNote,
+    @JsonKey(name: 'media') @InputFileConverter() required this.media,
+    @JsonKey(name: 'caption') this.caption,
+    @JsonKey(name: 'parse_mode') this.parseMode,
+    @JsonKey(name: 'caption_entities')
+    final List<MessageEntity>? captionEntities,
+    @JsonKey(name: 'duration') this.duration,
+  }) : _captionEntities = captionEntities,
+       super._();
+  factory InputMediaVoiceNote.fromJson(Map<String, dynamic> json) =>
+      _$InputMediaVoiceNoteFromJson(json);
+
+  /// Type of input media.
+  @override
+  @JsonKey(name: 'type')
+  final InputMediaType type;
+
+  /// The file to send
+  @override
+  @JsonKey(name: 'media')
+  @InputFileConverter()
+  final InputFile media;
+
+  /// Optional. Caption of the voice message to be sent, 0-1024 characters after
+  /// entities parsing
+  @override
+  @JsonKey(name: 'caption')
+  final String? caption;
+
+  /// Optional. Mode for parsing entities in the voice message caption. See
+  /// formatting options for more details.
+  @override
+  @JsonKey(name: 'parse_mode')
+  final ParseMode? parseMode;
+
+  /// Optional. List of special entities that appear in the caption, which can
+  /// be specified instead of parse_mode
+  final List<MessageEntity>? _captionEntities;
+
+  /// Optional. List of special entities that appear in the caption, which can
+  /// be specified instead of parse_mode
+  @override
+  @JsonKey(name: 'caption_entities')
+  List<MessageEntity>? get captionEntities {
+    final value = _captionEntities;
+    if (value == null) return null;
+    if (_captionEntities is EqualUnmodifiableListView) return _captionEntities;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
+  /// Optional. Duration of the voice message in seconds
+  @JsonKey(name: 'duration')
+  final int? duration;
+
+  /// Create a copy of InputMedia
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  $InputMediaVoiceNoteCopyWith<InputMediaVoiceNote> get copyWith =>
+      _$InputMediaVoiceNoteCopyWithImpl<InputMediaVoiceNote>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$InputMediaVoiceNoteToJson(this);
+  }
+
+  @override
+  String toString() {
+    return 'InputMedia.voiceNote(type: $type, media: $media, caption: $caption, parseMode: $parseMode, captionEntities: $captionEntities, duration: $duration)';
+  }
+}
+
+/// @nodoc
+abstract mixin class $InputMediaVoiceNoteCopyWith<$Res>
+    implements $InputMediaCopyWith<$Res> {
+  factory $InputMediaVoiceNoteCopyWith(
+    InputMediaVoiceNote value,
+    $Res Function(InputMediaVoiceNote) _then,
+  ) = _$InputMediaVoiceNoteCopyWithImpl;
+  @override
+  @useResult
+  $Res call({
+    @JsonKey(name: 'type') InputMediaType type,
+    @JsonKey(name: 'media') @InputFileConverter() InputFile media,
+    @JsonKey(name: 'caption') String? caption,
+    @JsonKey(name: 'parse_mode') ParseMode? parseMode,
+    @JsonKey(name: 'caption_entities') List<MessageEntity>? captionEntities,
+    @JsonKey(name: 'duration') int? duration,
+  });
+}
+
+/// @nodoc
+class _$InputMediaVoiceNoteCopyWithImpl<$Res>
+    implements $InputMediaVoiceNoteCopyWith<$Res> {
+  _$InputMediaVoiceNoteCopyWithImpl(this._self, this._then);
+
+  final InputMediaVoiceNote _self;
+  final $Res Function(InputMediaVoiceNote) _then;
+
+  /// Create a copy of InputMedia
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? type = null,
+    Object? media = null,
+    Object? caption = freezed,
+    Object? parseMode = freezed,
+    Object? captionEntities = freezed,
+    Object? duration = freezed,
+  }) {
+    return _then(
+      InputMediaVoiceNote(
+        type: null == type
+            ? _self.type
+            : type // ignore: cast_nullable_to_non_nullable
+                  as InputMediaType,
+        media: null == media
+            ? _self.media
+            : media // ignore: cast_nullable_to_non_nullable
+                  as InputFile,
+        caption: freezed == caption
+            ? _self.caption
+            : caption // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        parseMode: freezed == parseMode
+            ? _self.parseMode
+            : parseMode // ignore: cast_nullable_to_non_nullable
+                  as ParseMode?,
+        captionEntities: freezed == captionEntities
+            ? _self._captionEntities
+            : captionEntities // ignore: cast_nullable_to_non_nullable
+                  as List<MessageEntity>?,
+        duration: freezed == duration
+            ? _self.duration
+            : duration // ignore: cast_nullable_to_non_nullable
+                  as int?,
       ),
     );
   }

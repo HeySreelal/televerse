@@ -15,6 +15,7 @@ export './bot_command_scope.dart';
 export './bot_description.dart';
 export './bot_name.dart';
 export './bot_short_description.dart';
+export './bot_subscription_updated.dart';
 export './business_connection.dart';
 export './business_intro.dart';
 export './business_location.dart';
@@ -235,3 +236,11 @@ export 'rich_block.dart';
 export 'rich_block_caption.dart';
 export 'rich_block_list_item.dart';
 export 'rich_block_table_cell.dart';
+
+// Bot API 10.2
+export 'input_rich_message_media.dart';
+export 'input_rich_block.dart';
+export 'input_rich_block_list_item.dart';
+export 'community.dart';
+export 'community_chat_added.dart';
+export 'community_chat_removed.dart';

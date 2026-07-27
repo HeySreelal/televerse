@@ -1354,3 +1354,16 @@ class PaidMediaPhotoFilter<CTX extends Context> extends Filter<CTX> {
   @override
   String toString() => 'PaidMediaPhotoFilter()';
 }
+
+/// Filter for subscription updates.
+class SubscriptionFilter<CTX extends Context> extends Filter<CTX> {
+  /// Creates a filter that matches subscription updates.
+  const SubscriptionFilter();
+
+  @override
+  bool matches(CTX ctx) => ctx.subscription != null;
+
+  @override
+  String toString() => 'SubscriptionFilter()';
+}
+

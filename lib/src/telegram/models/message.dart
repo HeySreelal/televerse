@@ -502,6 +502,20 @@ abstract class Message
 
     /// Optional. Message is a rich formatted message
     @JsonKey(name: 'rich_message') RichMessage? richMessage,
+
+    /// Optional. For ephemeral messages, the user who received the message
+    @JsonKey(name: 'receiver_user') User? receiverUser,
+
+    /// Optional. For ephemeral messages, identifier of the ephemeral message inside this chat. The identifier may be reused for another ephemeral message after the message is deleted or expires.
+    @JsonKey(name: 'ephemeral_message_id') int? ephemeralMessageId,
+
+    /// Optional. Service message: chat added to a Community
+    @JsonKey(name: 'community_chat_added')
+    CommunityChatAdded? communityChatAdded,
+
+    /// Optional. Service message: chat removed from a Community
+    @JsonKey(name: 'community_chat_removed')
+    CommunityChatRemoved? communityChatRemoved,
   }) = _Message;
 
   /// Creates a [Message] object from JSON object
