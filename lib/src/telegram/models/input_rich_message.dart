@@ -41,4 +41,3 @@ abstract class InputRichMessage
     return media?.expand((m) => m.getInputFiles()) ?? [];
   }
 }
-

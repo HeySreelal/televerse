@@ -10,6 +10,30 @@ part of 'input_media.dart';
 // **************************************************************************
 
 T _$identity<T>(T value) => value;
+InputMedia _$InputMediaFromJson(Map<String, dynamic> json) {
+  switch (json['type']) {
+    case 'photo':
+      return InputMediaPhoto.fromJson(json);
+    case 'document':
+      return InputMediaDocument.fromJson(json);
+    case 'animation':
+      return InputMediaAnimation.fromJson(json);
+    case 'audio':
+      return InputMediaAudio.fromJson(json);
+    case 'video':
+      return InputMediaVideo.fromJson(json);
+    case 'voiceNote':
+      return InputMediaVoiceNote.fromJson(json);
+
+    default:
+      throw CheckedFromJsonException(
+        json,
+        'type',
+        'InputMedia',
+        'Invalid union type "${json['type']}"!',
+      );
+  }
+}
 
 /// @nodoc
 mixin _$InputMedia {
@@ -238,7 +262,7 @@ extension InputMediaPatterns on InputMedia {
 }
 
 /// @nodoc
-@JsonSerializable(createFactory: false)
+@JsonSerializable()
 class InputMediaPhoto extends InputMedia {
   const InputMediaPhoto({
     @JsonKey(name: 'type') this.type = InputMediaType.photo,
@@ -251,6 +275,8 @@ class InputMediaPhoto extends InputMedia {
     @JsonKey(name: 'show_caption_above_media') this.showCaptionAboveMedia,
   }) : _captionEntities = captionEntities,
        super._();
+  factory InputMediaPhoto.fromJson(Map<String, dynamic> json) =>
+      _$InputMediaPhotoFromJson(json);
 
   /// Type of input media.
   @override
@@ -396,7 +422,7 @@ class _$InputMediaPhotoCopyWithImpl<$Res>
 }
 
 /// @nodoc
-@JsonSerializable(createFactory: false)
+@JsonSerializable()
 class InputMediaDocument extends InputMedia {
   const InputMediaDocument({
     @JsonKey(name: 'type') this.type = InputMediaType.document,
@@ -410,6 +436,8 @@ class InputMediaDocument extends InputMedia {
     this.disableContentTypeDetection,
   }) : _captionEntities = captionEntities,
        super._();
+  factory InputMediaDocument.fromJson(Map<String, dynamic> json) =>
+      _$InputMediaDocumentFromJson(json);
 
   /// Type of input media.
   @override
@@ -559,7 +587,7 @@ class _$InputMediaDocumentCopyWithImpl<$Res>
 }
 
 /// @nodoc
-@JsonSerializable(createFactory: false)
+@JsonSerializable()
 class InputMediaAnimation extends InputMedia {
   const InputMediaAnimation({
     @JsonKey(name: 'type') this.type = InputMediaType.animation,
@@ -576,6 +604,8 @@ class InputMediaAnimation extends InputMedia {
     @JsonKey(name: 'show_caption_above_media') this.showCaptionAboveMedia,
   }) : _captionEntities = captionEntities,
        super._();
+  factory InputMediaAnimation.fromJson(Map<String, dynamic> json) =>
+      _$InputMediaAnimationFromJson(json);
 
   /// Type of input media.
   @override
@@ -762,7 +792,7 @@ class _$InputMediaAnimationCopyWithImpl<$Res>
 }
 
 /// @nodoc
-@JsonSerializable(createFactory: false)
+@JsonSerializable()
 class InputMediaAudio extends InputMedia {
   const InputMediaAudio({
     @JsonKey(name: 'type') this.type = InputMediaType.audio,
@@ -777,6 +807,8 @@ class InputMediaAudio extends InputMedia {
     @JsonKey(name: 'title') this.title,
   }) : _captionEntities = captionEntities,
        super._();
+  factory InputMediaAudio.fromJson(Map<String, dynamic> json) =>
+      _$InputMediaAudioFromJson(json);
 
   /// Type of input media.
   @override
@@ -942,7 +974,7 @@ class _$InputMediaAudioCopyWithImpl<$Res>
 }
 
 /// @nodoc
-@JsonSerializable(createFactory: false)
+@JsonSerializable()
 class InputMediaVideo extends InputMedia {
   const InputMediaVideo({
     @JsonKey(name: 'type') this.type = InputMediaType.video,
@@ -962,6 +994,8 @@ class InputMediaVideo extends InputMedia {
     @JsonKey(name: 'cover') @InputFileConverter() this.cover,
   }) : _captionEntities = captionEntities,
        super._();
+  factory InputMediaVideo.fromJson(Map<String, dynamic> json) =>
+      _$InputMediaVideoFromJson(json);
 
   /// Type of input media.
   @override
@@ -1180,7 +1214,7 @@ class _$InputMediaVideoCopyWithImpl<$Res>
 }
 
 /// @nodoc
-@JsonSerializable(createFactory: false)
+@JsonSerializable()
 class InputMediaVoiceNote extends InputMedia {
   const InputMediaVoiceNote({
     @JsonKey(name: 'type') this.type = InputMediaType.voiceNote,
@@ -1192,6 +1226,8 @@ class InputMediaVoiceNote extends InputMedia {
     @JsonKey(name: 'duration') this.duration,
   }) : _captionEntities = captionEntities,
        super._();
+  factory InputMediaVoiceNote.fromJson(Map<String, dynamic> json) =>
+      _$InputMediaVoiceNoteFromJson(json);
 
   /// Type of input media.
   @override

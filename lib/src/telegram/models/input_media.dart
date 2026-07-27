@@ -17,7 +17,7 @@ abstract interface class _InputMediaImp {
 
 /// This object represents the content of a media message to be sent. It should
 /// be one of
-@Freezed(fromJson: false, toJson: true, unionKey: "type")
+@Freezed(unionKey: "type")
 sealed class InputMedia
     with _$InputMedia
     implements _InputMediaImp, InputPollMedia, InputPollOptionMedia {
@@ -292,6 +292,6 @@ sealed class InputMedia
     @JsonKey(name: 'duration') final int? duration,
   }) = InputMediaVoiceNote;
 
-  factory InputMedia.fromJson(Map<String, Object?> json) =>
-      throw Exception("Can't create InputMedia from JSON");
+  factory InputMedia.fromJson(Map<String, dynamic> json) =>
+      _$InputMediaFromJson(json);
 }

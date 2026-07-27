@@ -238,4 +238,5 @@ export 'rich_block_table_cell.dart';
 
 // Bot API 10.2
 export 'input_rich_message_media.dart';
-
+export 'input_rich_block.dart';
+export 'input_rich_block_list_item.dart';

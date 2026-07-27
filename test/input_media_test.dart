@@ -64,38 +64,130 @@ void main() {
   });
 
   group('InputRichMessage Tests', () {
-    test('InputRichMessage creates correctly with media and serializes to JSON', () {
+    test(
+      'InputRichMessage creates correctly with media and serializes to JSON',
+      () {
+        final photoMedia = InputMedia.photo(
+          media: InputFile.fromFileId('photo_789'),
+        );
+        final richMedia = InputRichMessageMedia(
+          id: 'photo1',
+          media: photoMedia,
+        );
+        final richMessage = InputRichMessage(
+          html: '<a href="tg://photo?id=photo1">Photo</a>',
+          media: [richMedia],
+        );
+
+        expect(
+          richMessage.html,
+          equals('<a href="tg://photo?id=photo1">Photo</a>'),
+        );
+        expect(richMessage.media?.length, equals(1));
+        expect(richMessage.media?.first.id, equals('photo1'));
+
+        final json = richMessage.toJson();
+        expect(
+          json['html'],
+          equals('<a href="tg://photo?id=photo1">Photo</a>'),
+        );
+        expect(json['media'], isA<List>());
+        expect((json['media'] as List).length, equals(1));
+
+        final jsonString = jsonEncode(richMessage);
+        final decoded = jsonDecode(jsonString) as Map<String, dynamic>;
+        expect(
+          decoded['html'],
+          equals('<a href="tg://photo?id=photo1">Photo</a>'),
+        );
+        expect((decoded['media'] as List).first['id'], equals('photo1'));
+
+        final files = richMessage.getInputFiles();
+        expect(files.length, equals(1));
+        expect(files.first?.getValue(), equals('photo_789'));
+      },
+    );
+  });
+
+  group('InputRichBlockListItem Tests', () {
+    test('InputRichBlockListItem serializes and deserializes correctly', () {
+      final item = InputRichBlockListItem(
+        blocks: [InputRichBlock.divider()],
+        hasCheckbox: true,
+        isChecked: false,
+        value: 1,
+        type: '1',
+      );
+
+      expect(item.blocks.length, equals(1));
+      expect(item.hasCheckbox, isTrue);
+      expect(item.isChecked, isFalse);
+      expect(item.value, equals(1));
+      expect(item.type, equals('1'));
+
+      final jsonString = jsonEncode(item);
+      final json = jsonDecode(jsonString) as Map<String, dynamic>;
+      expect(json['blocks'], isA<List>());
+      expect(json['has_checkbox'], isTrue);
+      expect(json['is_checked'], isFalse);
+      expect(json['value'], equals(1));
+      expect(json['type'], equals('1'));
+
+      final deserialized = InputRichBlockListItem.fromJson(json);
+
+      expect(deserialized.blocks.length, equals(1));
+      expect(deserialized.hasCheckbox, isTrue);
+      expect(deserialized.isChecked, isFalse);
+      expect(deserialized.value, equals(1));
+      expect(deserialized.type, equals('1'));
+    });
+  });
+
+  group('InputRichBlock Tests', () {
+    test('InputRichBlock subclasses serialize and deserialize correctly', () {
+      final paragraph = InputRichBlock.paragraph(
+        text: RichText.plain(text: 'Hello world'),
+      );
+      final jsonP = jsonDecode(jsonEncode(paragraph)) as Map<String, dynamic>;
+      expect(jsonP['type'], equals('paragraph'));
+      expect(InputRichBlock.fromJson(jsonP), isA<InputRichBlockParagraph>());
+
+      final heading = InputRichBlock.heading(
+        text: RichText.plain(text: 'Heading'),
+        size: 1,
+      );
+      final jsonH = jsonDecode(jsonEncode(heading)) as Map<String, dynamic>;
+      expect(jsonH['type'], equals('heading'));
+      expect(jsonH['size'], equals(1));
+      expect(
+        InputRichBlock.fromJson(jsonH),
+        isA<InputRichBlockSectionHeading>(),
+      );
+
+      final math = InputRichBlock.mathematicalExpression(
+        expression: r'E = mc^2',
+      );
+      final jsonM = jsonDecode(jsonEncode(math)) as Map<String, dynamic>;
+      expect(jsonM['type'], equals('mathematical_expression'));
+      expect(jsonM['expression'], equals(r'E = mc^2'));
+      expect(
+        InputRichBlock.fromJson(jsonM),
+        isA<InputRichBlockMathematicalExpression>(),
+      );
+
       final photoMedia = InputMedia.photo(
-        media: InputFile.fromFileId('photo_789'),
+        media: InputFile.fromFileId('photo_abc'),
       );
-      final richMedia = InputRichMessageMedia(
-        id: 'photo1',
-        media: photoMedia,
+      final photoBlock = InputRichBlock.photo(
+        photo: photoMedia as InputMediaPhoto,
       );
-      final richMessage = InputRichMessage(
-        html: '<a href="tg://photo?id=photo1">Photo</a>',
-        media: [richMedia],
-      );
+      expect(photoBlock.getInputFiles().length, equals(1));
+      expect(photoBlock.getInputFiles().first?.getValue(), equals('photo_abc'));
 
-      expect(richMessage.html, equals('<a href="tg://photo?id=photo1">Photo</a>'));
-      expect(richMessage.media?.length, equals(1));
-      expect(richMessage.media?.first.id, equals('photo1'));
-
-      final json = richMessage.toJson();
-      expect(json['html'], equals('<a href="tg://photo?id=photo1">Photo</a>'));
-      expect(json['media'], isA<List>());
-      expect((json['media'] as List).length, equals(1));
-
-      final jsonString = jsonEncode(richMessage);
-      final decoded = jsonDecode(jsonString) as Map<String, dynamic>;
-      expect(decoded['html'], equals('<a href="tg://photo?id=photo1">Photo</a>'));
-      expect((decoded['media'] as List).first['id'], equals('photo1'));
-
-      final files = richMessage.getInputFiles();
-      expect(files.length, equals(1));
-      expect(files.first?.getValue(), equals('photo_789'));
+      final jsonPhotoString = jsonEncode(photoBlock);
+      final jsonPhoto = jsonDecode(jsonPhotoString) as Map<String, dynamic>;
+      expect(jsonPhoto['type'], equals('photo'));
+      expect(jsonPhoto['photo']['media'], equals('photo_abc'));
     });
   });
 }
-
-
