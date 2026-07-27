@@ -5,6 +5,7 @@ import 'package:televerse/telegram.dart';
 import 'package:televerse/televerse.dart' show InputFile;
 
 part 'input_rich_message.freezed.dart';
+
 part 'input_rich_message.g.dart';
 
 /// Describes a rich message to be sent. Exactly one of the fields html or markdown must be used.
@@ -28,6 +29,9 @@ abstract class InputRichMessage
 
     /// Optional. List of media that are specified in the markdown or html fields using tg://photo?id=, tg://video?id=, and tg://audio?id= links
     @JsonKey(name: 'media') List<InputRichMessageMedia>? media,
+
+    /// Optional. Content of the rich message to send described as a list of blocks
+    @JsonKey(name: 'blocks') List<InputRichBlock>? blocks,
   }) = _InputRichMessage;
 
   const InputRichMessage._();
@@ -38,6 +42,8 @@ abstract class InputRichMessage
 
   @override
   Iterable<InputFile?> getInputFiles() {
-    return media?.expand((m) => m.getInputFiles()) ?? [];
+    final mediaFiles = media?.expand((m) => m.getInputFiles()) ?? [];
+    final blockFiles = blocks?.expand((b) => b.getInputFiles()) ?? [];
+    return [...mediaFiles, ...blockFiles];
   }
 }

@@ -107,6 +107,30 @@ void main() {
         expect(files.first?.getValue(), equals('photo_789'));
       },
     );
+
+    test('InputRichMessage serializes blocks field correctly', () {
+      final photoBlock = InputRichBlock.photo(
+        photo:
+            InputMedia.photo(media: InputFile.fromFileId('block_photo'))
+                as InputMediaPhoto,
+      );
+      final richMessage = InputRichMessage(
+        blocks: [
+          InputRichBlock.paragraph(text: RichText.plain(text: 'Hello block')),
+          photoBlock,
+        ],
+      );
+
+      expect(richMessage.blocks?.length, equals(2));
+      final jsonString = jsonEncode(richMessage);
+      final decoded = jsonDecode(jsonString) as Map<String, dynamic>;
+      expect(decoded['blocks'], isA<List>());
+      expect((decoded['blocks'] as List).length, equals(2));
+
+      final files = richMessage.getInputFiles();
+      expect(files.length, equals(1));
+      expect(files.first?.getValue(), equals('block_photo'));
+    });
   });
 
   group('InputRichBlockListItem Tests', () {

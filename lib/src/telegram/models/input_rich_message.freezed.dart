@@ -33,6 +33,10 @@ mixin _$InputRichMessage {
   @JsonKey(name: 'media')
   List<InputRichMessageMedia>? get media;
 
+  /// Optional. Content of the rich message to send described as a list of blocks
+  @JsonKey(name: 'blocks')
+  List<InputRichBlock>? get blocks;
+
   /// Create a copy of InputRichMessage
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -48,7 +52,7 @@ mixin _$InputRichMessage {
 
   @override
   String toString() {
-    return 'InputRichMessage(html: $html, markdown: $markdown, isRtl: $isRtl, skipEntityDetection: $skipEntityDetection, media: $media)';
+    return 'InputRichMessage(html: $html, markdown: $markdown, isRtl: $isRtl, skipEntityDetection: $skipEntityDetection, media: $media, blocks: $blocks)';
   }
 }
 
@@ -65,6 +69,7 @@ abstract mixin class $InputRichMessageCopyWith<$Res> {
     @JsonKey(name: 'is_rtl') bool? isRtl,
     @JsonKey(name: 'skip_entity_detection') bool? skipEntityDetection,
     @JsonKey(name: 'media') List<InputRichMessageMedia>? media,
+    @JsonKey(name: 'blocks') List<InputRichBlock>? blocks,
   });
 }
 
@@ -86,6 +91,7 @@ class _$InputRichMessageCopyWithImpl<$Res>
     Object? isRtl = freezed,
     Object? skipEntityDetection = freezed,
     Object? media = freezed,
+    Object? blocks = freezed,
   }) {
     return _then(
       _self.copyWith(
@@ -109,6 +115,10 @@ class _$InputRichMessageCopyWithImpl<$Res>
             ? _self.media
             : media // ignore: cast_nullable_to_non_nullable
                   as List<InputRichMessageMedia>?,
+        blocks: freezed == blocks
+            ? _self.blocks
+            : blocks // ignore: cast_nullable_to_non_nullable
+                  as List<InputRichBlock>?,
       ),
     );
   }
@@ -203,7 +213,9 @@ class _InputRichMessage extends InputRichMessage {
     @JsonKey(name: 'is_rtl') this.isRtl,
     @JsonKey(name: 'skip_entity_detection') this.skipEntityDetection,
     @JsonKey(name: 'media') final List<InputRichMessageMedia>? media,
+    @JsonKey(name: 'blocks') final List<InputRichBlock>? blocks,
   }) : _media = media,
+       _blocks = blocks,
        super._();
   factory _InputRichMessage.fromJson(Map<String, dynamic> json) =>
       _$InputRichMessageFromJson(json);
@@ -242,6 +254,20 @@ class _InputRichMessage extends InputRichMessage {
     return EqualUnmodifiableListView(value);
   }
 
+  /// Optional. Content of the rich message to send described as a list of blocks
+  final List<InputRichBlock>? _blocks;
+
+  /// Optional. Content of the rich message to send described as a list of blocks
+  @override
+  @JsonKey(name: 'blocks')
+  List<InputRichBlock>? get blocks {
+    final value = _blocks;
+    if (value == null) return null;
+    if (_blocks is EqualUnmodifiableListView) return _blocks;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
   /// Create a copy of InputRichMessage
   /// with the given fields replaced by the non-null parameter values.
   @override
@@ -257,7 +283,7 @@ class _InputRichMessage extends InputRichMessage {
 
   @override
   String toString() {
-    return 'InputRichMessage(html: $html, markdown: $markdown, isRtl: $isRtl, skipEntityDetection: $skipEntityDetection, media: $media)';
+    return 'InputRichMessage(html: $html, markdown: $markdown, isRtl: $isRtl, skipEntityDetection: $skipEntityDetection, media: $media, blocks: $blocks)';
   }
 }
 
@@ -276,6 +302,7 @@ abstract mixin class _$InputRichMessageCopyWith<$Res>
     @JsonKey(name: 'is_rtl') bool? isRtl,
     @JsonKey(name: 'skip_entity_detection') bool? skipEntityDetection,
     @JsonKey(name: 'media') List<InputRichMessageMedia>? media,
+    @JsonKey(name: 'blocks') List<InputRichBlock>? blocks,
   });
 }
 
@@ -297,6 +324,7 @@ class __$InputRichMessageCopyWithImpl<$Res>
     Object? isRtl = freezed,
     Object? skipEntityDetection = freezed,
     Object? media = freezed,
+    Object? blocks = freezed,
   }) {
     return _then(
       _InputRichMessage(
@@ -320,6 +348,10 @@ class __$InputRichMessageCopyWithImpl<$Res>
             ? _self._media
             : media // ignore: cast_nullable_to_non_nullable
                   as List<InputRichMessageMedia>?,
+        blocks: freezed == blocks
+            ? _self._blocks
+            : blocks // ignore: cast_nullable_to_non_nullable
+                  as List<InputRichBlock>?,
       ),
     );
   }
