@@ -104,7 +104,11 @@ enum UpdateType implements TeleverseEnum {
 
   /// New guest message.
   @JsonValue("guest_message")
-  guestMessage;
+  guestMessage,
+
+  /// User payment subscription has changed.
+  @JsonValue("subscription")
+  subscription;
 
   /// Check if the update is a message update
   bool get isMessage => this == UpdateType.message;
@@ -159,6 +163,9 @@ enum UpdateType implements TeleverseEnum {
 
   /// Check if the update is a guest message update
   bool get isGuestMessage => this == UpdateType.guestMessage;
+
+  /// Check if the update is a subscription update
+  bool get isSubscription => this == UpdateType.subscription;
 
   /// List of update types that related to a Message event.
   static List<UpdateType> messages() {

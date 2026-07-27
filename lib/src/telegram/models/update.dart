@@ -1,5 +1,6 @@
 // ignore_for_file: invalid_annotation_target
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:televerse/src/telegram/models/bot_subscription_updated.dart';
 import 'package:televerse/src/telegram/models/business_connection.dart';
 import 'package:televerse/src/telegram/models/business_messages_deleted.dart';
 import 'package:televerse/src/telegram/models/callback_query.dart';
@@ -144,6 +145,9 @@ abstract class Update with _$Update {
     /// Message.guest_query_id and the method answerGuestQuery to send a message
     /// in response.
     @JsonKey(name: 'guest_message') Message? guestMessage,
+
+    /// Optional. User payment subscription has changed
+    @JsonKey(name: 'subscription') BotSubscriptionUpdated? subscription,
   }) = _Update;
 
   /// Creates a [Update] from json [Map].
@@ -204,6 +208,8 @@ extension UpdateExt on Update {
       return UpdateType.managedBot;
     } else if (guestMessage != null) {
       return UpdateType.guestMessage;
+    } else if (subscription != null) {
+      return UpdateType.subscription;
     } else {
       throw TeleverseException(
         "The update type is unknown",

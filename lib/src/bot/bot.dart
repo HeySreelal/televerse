@@ -1308,6 +1308,24 @@ class Bot<CTX extends Context> extends Composer<CTX> {
     return on(PurchasedPaidMediaFilter<CTX>(), handler);
   }
 
+  /// Adds a handler for user payment subscription updates.
+  ///
+  /// Parameters:
+  /// - [handler]: The handler function
+  @override
+  Bot<CTX> onSubscription(UpdateHandler<CTX> handler) {
+    return on(SubscriptionFilter<CTX>(), handler);
+  }
+
+  /// Adds a handler for user payment subscription updates (alias for [onSubscription]).
+  ///
+  /// Parameters:
+  /// - [handler]: The handler function
+  @override
+  Bot<CTX> subscription(UpdateHandler<CTX> handler) {
+    return onSubscription(handler);
+  }
+
   // ===============================
   // Enhanced Convenience Methods
   // ===============================
