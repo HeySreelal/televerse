@@ -3,7 +3,7 @@
 
 [![Pub Version](https://img.shields.io/pub/v/televerse?color=blue&logo=blue)](https://pub.dev/packages/televerse)
 ![GitHub](https://img.shields.io/github/license/theweaverlabs/televerse?color=green)
-![](https://shields.io/badge/Latest-Bot%20API%2010.1-blue)
+![](https://shields.io/badge/Latest-Bot%20API%2010.2-blue)
 
   <a href="https://telegram.me/TeleverseDart">
     <img src="https://img.shields.io/badge/Telegram%2F@TeleverseDart-2CA5E0?style=for-the-badge&logo=telegram&logoColor=white"/>
@@ -12,7 +12,7 @@
 
 ---
 
-🤖 `Bot API version: Bot API 10.1 (June 11, 2026)`
+🤖 `Bot API version: Bot API 10.2 (July 14, 2026)`
 
 Televerse is a powerful, easy-to-use, and highly customizable Telegram bot framework built with Dart programming language. It provides a complete and well-structured API that enables developers to create and deploy complex Telegram bots with ease. Televerse provides a total of 0 dynamic types on its public interface, making it easy for developers to write strictly typed code with full generic support.
 
@@ -153,7 +153,7 @@ Televerse uses 0 dynamic types on the public interface and supports full generic
 // Custom context with full type safety
 class MyContext extends Context {
   MyContext(super.update, super.api, super.me);
-  
+
   String get userName => from?.firstName ?? 'Unknown';
   bool get isVip => get<bool>('vip') ?? false;
 }
@@ -241,19 +241,19 @@ bot.command('keyboard', (ctx) async {
 
 Televerse offers a wide array of listener methods to cater to your bot's needs:
 
-| Method              | Description                                                      |
-| ------------------- | ---------------------------------------------------------------- |
-| `bot.command`       | For listening commands                                           |
-| `bot.hears`         | For listening to specified Regular Expression                    |
-| `bot.on`            | For listening using powerful filter system                       |
-| `bot.inlineQuery`   | For listening to inline query with specified query text         |
-| `bot.text`          | For listening to message with specified text                     |
-| `bot.callbackQuery` | For listening to specified callback data                         |
-| `bot.onDocument`    | For listening to messages that contain a document               |
-| `bot.onPhoto`       | For listening to photo messages                                  |
-| `bot.chatType`      | For filtering updates on specific type of chat                   |
+| Method              | Description                                                             |
+| ------------------- | ----------------------------------------------------------------------- |
+| `bot.command`       | For listening commands                                                  |
+| `bot.hears`         | For listening to specified Regular Expression                           |
+| `bot.on`            | For listening using powerful filter system                              |
+| `bot.inlineQuery`   | For listening to inline query with specified query text                 |
+| `bot.text`          | For listening to message with specified text                            |
+| `bot.callbackQuery` | For listening to specified callback data                                |
+| `bot.onDocument`    | For listening to messages that contain a document                       |
+| `bot.onPhoto`       | For listening to photo messages                                         |
+| `bot.chatType`      | For filtering updates on specific type of chat                          |
 | `bot.entity`        | Sets up handler method for messages that contains specified entity type |
-| `bot.myChatMember`  | Listens to change in Bot's chat member status                   |
+| `bot.myChatMember`  | Listens to change in Bot's chat member status                           |
 
 - And much much more! 🎉
 
@@ -354,17 +354,17 @@ bot.plugin(ConversationPlugin<Context>());
 Future<void> askUserInfo(Conversation<Context> conversation, Context ctx) async {
   try {
     await ctx.reply("What's your name?");
-    
+
     // Wait for text message with timeout
     final nameCtx = await conversation.waitFor(
       bot.filters.text.matches,
       timeout: Duration(minutes: 2),
     );
-    
+
     await nameCtx.reply("Nice to meet you, ${nameCtx.text}!");
-    
+
     await nameCtx.reply("How old are you?");
-    
+
     // Wait for a number with validation
     final ageCtx = await conversation.waitUntil(
       (ctx) => int.tryParse(ctx.text ?? '') != null,
@@ -373,10 +373,10 @@ Future<void> askUserInfo(Conversation<Context> conversation, Context ctx) async 
         await ctx.reply("Please send a valid number.");
       },
     );
-    
+
     final age = int.parse(ageCtx.text!);
     await ageCtx.reply("Great! You are $age years old.");
-    
+
   } on ConversationTimeoutException {
     await ctx.reply("Sorry, you took too long to respond.");
   }
@@ -461,7 +461,7 @@ bot.command('count', (ctx) async {
 class RateLimitPlugin<CTX extends Context> extends MiddlewarePlugin<CTX> {
   @override
   String get name => 'rate-limit';
-  
+
   @override
   Middleware<CTX> get middleware => (ctx, next) async {
     // Rate limiting logic
@@ -471,16 +471,16 @@ class RateLimitPlugin<CTX extends Context> extends MiddlewarePlugin<CTX> {
     }
     await next();
   };
-  
+
   @override
   List<String> get dependencies => [];
-  
+
   @override
   String? get description => 'Rate limiter plugin';
-  
+
   @override
   void uninstall(Bot<CTX> bot) => bot.removeNamed(name);
-  
+
   @override
   String get version => 'v1.0.0';
 }
@@ -497,9 +497,9 @@ The new middleware system provides powerful composition capabilities:
 bot.use((ctx, next) async {
   print('📥 Processing update ${ctx.update.updateId}');
   final start = DateTime.now();
-  
+
   await next();
-  
+
   final duration = DateTime.now().difference(start);
   print('✅ Processed in ${duration.inMilliseconds}ms');
 });
@@ -562,27 +562,28 @@ await bot.startWebhookDev('https://abc123.ngrok.io');
 ## ⚡ Quick Examples
 
 ### Basic Bot
+
 ```dart
 import 'package:televerse/televerse.dart';
 
 void main() async {
   final bot = Bot<Context>('YOUR_BOT_TOKEN');
-  
+
   // Command handlers
   bot.command('start', (ctx) async {
     await ctx.reply('🚀 Welcome to Televerse!');
   });
-  
+
   // Filter-based handlers
   bot.on(bot.filters.photo, (ctx) async {
     await ctx.reply('Nice photo! 📸');
   });
-  
+
   // Pattern matching
   bot.hears(RegExp(r'(?i)hello'), (ctx) async {
     await ctx.reply('Hello there! 👋');
   });
-  
+
   // Error handling
   bot.onError((error) async {
     print('Bot Error: ${error.error}');
@@ -590,7 +591,7 @@ void main() async {
       await error.ctx!.reply('Sorry, something went wrong!');
     }
   });
-  
+
   await bot.start();
 }
 ```
