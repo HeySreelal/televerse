@@ -177,6 +177,9 @@ abstract class ChatFullInfo with _$ChatFullInfo {
 
     /// Optional. The bot that processes join request queries in the chat. The field is only available to chat administrators.
     @JsonKey(name: 'guard_bot') final User? guardBot,
+
+    /// Optional. The Community to which the chat belongs
+    @JsonKey(name: 'community') final Community? community,
   }) = _ChatFullInfo;
 
   /// Creates a [ChatFullInfo] object from a JSON map.

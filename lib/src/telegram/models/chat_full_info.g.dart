@@ -105,6 +105,9 @@ _ChatFullInfo _$ChatFullInfoFromJson(
   guardBot: json['guard_bot'] == null
       ? null
       : User.fromJson(json['guard_bot'] as Map<String, dynamic>),
+  community: json['community'] == null
+      ? null
+      : Community.fromJson(json['community'] as Map<String, dynamic>),
 );
 
 Map<String, dynamic> _$ChatFullInfoToJson(
@@ -164,6 +167,7 @@ Map<String, dynamic> _$ChatFullInfoToJson(
   'unique_gift_colors': ?instance.uniqueGiftColors,
   'first_profile_audio': ?instance.firstProfileAudio,
   'guard_bot': ?instance.guardBot,
+  'community': ?instance.community,
 };
 
 const _$ChatTypeEnumMap = {

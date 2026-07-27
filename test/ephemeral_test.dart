@@ -29,11 +29,7 @@ void main() {
         'chat': {'id': 67890, 'type': 'private'},
         'message_id': 1,
         'date': 1600000000,
-        'receiver_user': {
-          'id': 12345,
-          'is_bot': false,
-          'first_name': 'John',
-        },
+        'receiver_user': {'id': 12345, 'is_bot': false, 'first_name': 'John'},
         'ephemeral_message_id': 99,
       };
 

@@ -240,3 +240,6 @@ export 'rich_block_table_cell.dart';
 export 'input_rich_message_media.dart';
 export 'input_rich_block.dart';
 export 'input_rich_block_list_item.dart';
+export 'community.dart';
+export 'community_chat_added.dart';
+export 'community_chat_removed.dart';
