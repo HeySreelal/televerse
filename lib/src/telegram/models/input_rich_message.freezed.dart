@@ -29,6 +29,10 @@ mixin _$InputRichMessage {
   @JsonKey(name: 'skip_entity_detection')
   bool? get skipEntityDetection;
 
+  /// Optional. List of media that are specified in the markdown or html fields using tg://photo?id=, tg://video?id=, and tg://audio?id= links
+  @JsonKey(name: 'media')
+  List<InputRichMessageMedia>? get media;
+
   /// Create a copy of InputRichMessage
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -44,7 +48,7 @@ mixin _$InputRichMessage {
 
   @override
   String toString() {
-    return 'InputRichMessage(html: $html, markdown: $markdown, isRtl: $isRtl, skipEntityDetection: $skipEntityDetection)';
+    return 'InputRichMessage(html: $html, markdown: $markdown, isRtl: $isRtl, skipEntityDetection: $skipEntityDetection, media: $media)';
   }
 }
 
@@ -60,6 +64,7 @@ abstract mixin class $InputRichMessageCopyWith<$Res> {
     @JsonKey(name: 'markdown') String? markdown,
     @JsonKey(name: 'is_rtl') bool? isRtl,
     @JsonKey(name: 'skip_entity_detection') bool? skipEntityDetection,
+    @JsonKey(name: 'media') List<InputRichMessageMedia>? media,
   });
 }
 
@@ -80,6 +85,7 @@ class _$InputRichMessageCopyWithImpl<$Res>
     Object? markdown = freezed,
     Object? isRtl = freezed,
     Object? skipEntityDetection = freezed,
+    Object? media = freezed,
   }) {
     return _then(
       _self.copyWith(
@@ -99,6 +105,10 @@ class _$InputRichMessageCopyWithImpl<$Res>
             ? _self.skipEntityDetection
             : skipEntityDetection // ignore: cast_nullable_to_non_nullable
                   as bool?,
+        media: freezed == media
+            ? _self.media
+            : media // ignore: cast_nullable_to_non_nullable
+                  as List<InputRichMessageMedia>?,
       ),
     );
   }
@@ -186,13 +196,15 @@ extension InputRichMessagePatterns on InputRichMessage {
 
 /// @nodoc
 @JsonSerializable()
-class _InputRichMessage implements InputRichMessage {
+class _InputRichMessage extends InputRichMessage {
   const _InputRichMessage({
     @JsonKey(name: 'html') this.html,
     @JsonKey(name: 'markdown') this.markdown,
     @JsonKey(name: 'is_rtl') this.isRtl,
     @JsonKey(name: 'skip_entity_detection') this.skipEntityDetection,
-  });
+    @JsonKey(name: 'media') final List<InputRichMessageMedia>? media,
+  }) : _media = media,
+       super._();
   factory _InputRichMessage.fromJson(Map<String, dynamic> json) =>
       _$InputRichMessageFromJson(json);
 
@@ -216,6 +228,20 @@ class _InputRichMessage implements InputRichMessage {
   @JsonKey(name: 'skip_entity_detection')
   final bool? skipEntityDetection;
 
+  /// Optional. List of media that are specified in the markdown or html fields using tg://photo?id=, tg://video?id=, and tg://audio?id= links
+  final List<InputRichMessageMedia>? _media;
+
+  /// Optional. List of media that are specified in the markdown or html fields using tg://photo?id=, tg://video?id=, and tg://audio?id= links
+  @override
+  @JsonKey(name: 'media')
+  List<InputRichMessageMedia>? get media {
+    final value = _media;
+    if (value == null) return null;
+    if (_media is EqualUnmodifiableListView) return _media;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
   /// Create a copy of InputRichMessage
   /// with the given fields replaced by the non-null parameter values.
   @override
@@ -231,7 +257,7 @@ class _InputRichMessage implements InputRichMessage {
 
   @override
   String toString() {
-    return 'InputRichMessage(html: $html, markdown: $markdown, isRtl: $isRtl, skipEntityDetection: $skipEntityDetection)';
+    return 'InputRichMessage(html: $html, markdown: $markdown, isRtl: $isRtl, skipEntityDetection: $skipEntityDetection, media: $media)';
   }
 }
 
@@ -249,6 +275,7 @@ abstract mixin class _$InputRichMessageCopyWith<$Res>
     @JsonKey(name: 'markdown') String? markdown,
     @JsonKey(name: 'is_rtl') bool? isRtl,
     @JsonKey(name: 'skip_entity_detection') bool? skipEntityDetection,
+    @JsonKey(name: 'media') List<InputRichMessageMedia>? media,
   });
 }
 
@@ -269,6 +296,7 @@ class __$InputRichMessageCopyWithImpl<$Res>
     Object? markdown = freezed,
     Object? isRtl = freezed,
     Object? skipEntityDetection = freezed,
+    Object? media = freezed,
   }) {
     return _then(
       _InputRichMessage(
@@ -288,6 +316,10 @@ class __$InputRichMessageCopyWithImpl<$Res>
             ? _self.skipEntityDetection
             : skipEntityDetection // ignore: cast_nullable_to_non_nullable
                   as bool?,
+        media: freezed == media
+            ? _self._media
+            : media // ignore: cast_nullable_to_non_nullable
+                  as List<InputRichMessageMedia>?,
       ),
     );
   }

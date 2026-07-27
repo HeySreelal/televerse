@@ -4935,7 +4935,11 @@ class RawAPI {
       'suggested_post_parameters': ?suggestedPostParameters,
     };
 
-    final payload = Payload(params);
+    final files = _prepareFiles(
+      richMessage.getInputFiles().map((e) => (null, e)),
+    );
+
+    final payload = Payload(params, files);
     final response = await _makeRequest<Map<String, dynamic>>(
       APIMethod.sendRichMessage.name,
       payload,
@@ -4959,7 +4963,11 @@ class RawAPI {
       'message_thread_id': ?messageThreadId,
     };
 
-    final payload = Payload(params);
+    final files = _prepareFiles(
+      richMessage.getInputFiles().map((e) => (null, e)),
+    );
+
+    final payload = Payload(params, files);
     return await _makeRequest<bool>(
       APIMethod.sendRichMessageDraft.name,
       payload,
