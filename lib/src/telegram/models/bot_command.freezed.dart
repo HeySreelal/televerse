@@ -21,6 +21,10 @@ mixin _$BotCommand {
   @JsonKey(name: 'description')
   String get description;
 
+  /// Optional. True, if the command sends an ephemeral message, which can be seen only by the sender of the message and the bot
+  @JsonKey(name: 'is_ephemeral')
+  bool? get isEphemeral;
+
   /// Create a copy of BotCommand
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -33,7 +37,7 @@ mixin _$BotCommand {
 
   @override
   String toString() {
-    return 'BotCommand(command: $command, description: $description)';
+    return 'BotCommand(command: $command, description: $description, isEphemeral: $isEphemeral)';
   }
 }
 
@@ -47,6 +51,7 @@ abstract mixin class $BotCommandCopyWith<$Res> {
   $Res call({
     @JsonKey(name: 'command') String command,
     @JsonKey(name: 'description') String description,
+    @JsonKey(name: 'is_ephemeral') bool? isEphemeral,
   });
 }
 
@@ -61,7 +66,11 @@ class _$BotCommandCopyWithImpl<$Res> implements $BotCommandCopyWith<$Res> {
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({Object? command = null, Object? description = null}) {
+  $Res call({
+    Object? command = null,
+    Object? description = null,
+    Object? isEphemeral = freezed,
+  }) {
     return _then(
       _self.copyWith(
         command: null == command
@@ -72,6 +81,10 @@ class _$BotCommandCopyWithImpl<$Res> implements $BotCommandCopyWith<$Res> {
             ? _self.description
             : description // ignore: cast_nullable_to_non_nullable
                   as String,
+        isEphemeral: freezed == isEphemeral
+            ? _self.isEphemeral
+            : isEphemeral // ignore: cast_nullable_to_non_nullable
+                  as bool?,
       ),
     );
   }
@@ -163,6 +176,7 @@ class _BotCommand implements BotCommand {
   const _BotCommand({
     @JsonKey(name: 'command') required this.command,
     @JsonKey(name: 'description') required this.description,
+    @JsonKey(name: 'is_ephemeral') this.isEphemeral,
   });
   factory _BotCommand.fromJson(Map<String, dynamic> json) =>
       _$BotCommandFromJson(json);
@@ -176,6 +190,11 @@ class _BotCommand implements BotCommand {
   @override
   @JsonKey(name: 'description')
   final String description;
+
+  /// Optional. True, if the command sends an ephemeral message, which can be seen only by the sender of the message and the bot
+  @override
+  @JsonKey(name: 'is_ephemeral')
+  final bool? isEphemeral;
 
   /// Create a copy of BotCommand
   /// with the given fields replaced by the non-null parameter values.
@@ -192,7 +211,7 @@ class _BotCommand implements BotCommand {
 
   @override
   String toString() {
-    return 'BotCommand(command: $command, description: $description)';
+    return 'BotCommand(command: $command, description: $description, isEphemeral: $isEphemeral)';
   }
 }
 
@@ -208,6 +227,7 @@ abstract mixin class _$BotCommandCopyWith<$Res>
   $Res call({
     @JsonKey(name: 'command') String command,
     @JsonKey(name: 'description') String description,
+    @JsonKey(name: 'is_ephemeral') bool? isEphemeral,
   });
 }
 
@@ -222,7 +242,11 @@ class __$BotCommandCopyWithImpl<$Res> implements _$BotCommandCopyWith<$Res> {
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $Res call({Object? command = null, Object? description = null}) {
+  $Res call({
+    Object? command = null,
+    Object? description = null,
+    Object? isEphemeral = freezed,
+  }) {
     return _then(
       _BotCommand(
         command: null == command
@@ -233,6 +257,10 @@ class __$BotCommandCopyWithImpl<$Res> implements _$BotCommandCopyWith<$Res> {
             ? _self.description
             : description // ignore: cast_nullable_to_non_nullable
                   as String,
+        isEphemeral: freezed == isEphemeral
+            ? _self.isEphemeral
+            : isEphemeral // ignore: cast_nullable_to_non_nullable
+                  as bool?,
       ),
     );
   }

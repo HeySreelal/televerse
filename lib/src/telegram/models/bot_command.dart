@@ -14,6 +14,9 @@ abstract class BotCommand with _$BotCommand {
 
     /// Description of the command, 3-256 characters.
     @JsonKey(name: 'description') required String description,
+
+    /// Optional. True, if the command sends an ephemeral message, which can be seen only by the sender of the message and the bot
+    @JsonKey(name: 'is_ephemeral') bool? isEphemeral,
   }) = _BotCommand;
 
   /// Creates a [BotCommand] object from JSON object.

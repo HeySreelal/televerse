@@ -367,6 +367,10 @@ _Message _$MessageFromJson(Map<String, dynamic> json) => _Message(
   richMessage: json['rich_message'] == null
       ? null
       : RichMessage.fromJson(json['rich_message'] as Map<String, dynamic>),
+  receiverUser: json['receiver_user'] == null
+      ? null
+      : User.fromJson(json['receiver_user'] as Map<String, dynamic>),
+  ephemeralMessageId: (json['ephemeral_message_id'] as num?)?.toInt(),
 );
 
 Map<String, dynamic> _$MessageToJson(_Message instance) => <String, dynamic>{
@@ -482,4 +486,6 @@ Map<String, dynamic> _$MessageToJson(_Message instance) => <String, dynamic>{
   'guest_query_id': ?instance.guestQueryId,
   'live_photo': ?instance.livePhoto,
   'rich_message': ?instance.richMessage,
+  'receiver_user': ?instance.receiverUser,
+  'ephemeral_message_id': ?instance.ephemeralMessageId,
 };

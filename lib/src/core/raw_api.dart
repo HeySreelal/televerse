@@ -323,6 +323,8 @@ class RawAPI {
     bool? allowPaidBroadcast,
     int? directMessagesTopicId,
     SuggestedPostParameters? suggestedPostParameters,
+    int? receiverUserId,
+    String? callbackQueryId,
   }) async {
     final params = <String, dynamic>{
       'chat_id': chatId,
@@ -340,6 +342,8 @@ class RawAPI {
       'allow_paid_broadcast': ?allowPaidBroadcast,
       'direct_messages_topic_id': ?directMessagesTopicId,
       'suggested_post_parameters': ?suggestedPostParameters,
+      'receiver_user_id': ?receiverUserId,
+      'callback_query_id': ?callbackQueryId,
     };
 
     final payload = Payload(params);
@@ -395,6 +399,8 @@ class RawAPI {
     bool? allowPaidBroadcast,
     int? directMessagesTopicId,
     SuggestedPostParameters? suggestedPostParameters,
+    int? receiverUserId,
+    String? callbackQueryId,
   }) async {
     final params = <String, dynamic>{
       'chat_id': chatId,
@@ -414,6 +420,8 @@ class RawAPI {
       'allow_paid_broadcast': ?allowPaidBroadcast,
       'direct_messages_topic_id': ?directMessagesTopicId,
       'suggested_post_parameters': ?suggestedPostParameters,
+      'receiver_user_id': ?receiverUserId,
+      'callback_query_id': ?callbackQueryId,
     };
 
     final payload = Payload(params, _prepareFiles([('photo', photo)]));
@@ -623,6 +631,8 @@ class RawAPI {
     bool? allowPaidBroadcast,
     int? directMessagesTopicId,
     SuggestedPostParameters? suggestedPostParameters,
+    int? receiverUserId,
+    String? callbackQueryId,
   }) async {
     final params = <String, dynamic>{
       'chat_id': chatId,
@@ -644,6 +654,8 @@ class RawAPI {
       'allow_paid_broadcast': ?allowPaidBroadcast,
       'direct_messages_topic_id': ?directMessagesTopicId,
       'suggested_post_parameters': ?suggestedPostParameters,
+      'receiver_user_id': ?receiverUserId,
+      'callback_query_id': ?callbackQueryId,
     };
 
     final files = _prepareFiles([('audio', audio), (null, thumbnail)]);
@@ -677,6 +689,8 @@ class RawAPI {
     bool? allowPaidBroadcast,
     int? directMessagesTopicId,
     SuggestedPostParameters? suggestedPostParameters,
+    int? receiverUserId,
+    String? callbackQueryId,
   }) async {
     final params = <String, dynamic>{
       'chat_id': chatId,
@@ -696,6 +710,8 @@ class RawAPI {
       'allow_paid_broadcast': ?allowPaidBroadcast,
       'direct_messages_topic_id': ?directMessagesTopicId,
       'suggested_post_parameters': ?suggestedPostParameters,
+      'receiver_user_id': ?receiverUserId,
+      'callback_query_id': ?callbackQueryId,
     };
     final files = _prepareFiles([('document', document), (null, thumbnail)]);
     final payload = Payload(params, files);
@@ -735,6 +751,8 @@ class RawAPI {
     int? startTimestamp,
     int? directMessagesTopicId,
     SuggestedPostParameters? suggestedPostParameters,
+    int? receiverUserId,
+    String? callbackQueryId,
   }) async {
     final params = <String, dynamic>{
       'chat_id': chatId,
@@ -761,6 +779,8 @@ class RawAPI {
       'start_timestamp': ?startTimestamp,
       'direct_messages_topic_id': ?directMessagesTopicId,
       'suggested_post_parameters': ?suggestedPostParameters,
+      'receiver_user_id': ?receiverUserId,
+      'callback_query_id': ?callbackQueryId,
     };
 
     final files = _prepareFiles([
@@ -818,6 +838,8 @@ class RawAPI {
     ReplyParameters? replyParameters,
     ReplyMarkup? replyMarkup,
     String? businessConnectionId,
+    int? receiverUserId,
+    String? callbackQueryId,
   }) async {
     final params = <String, dynamic>{
       'chat_id': chatId,
@@ -838,6 +860,8 @@ class RawAPI {
       'reply_parameters': ?replyParameters,
       'reply_markup': ?replyMarkup,
       'business_connection_id': ?businessConnectionId,
+      'receiver_user_id': ?receiverUserId,
+      'callback_query_id': ?callbackQueryId,
     };
 
     final files = _prepareFiles([(null, livePhoto), (null, photo)]);
@@ -876,6 +900,8 @@ class RawAPI {
     bool? allowPaidBroadcast,
     int? directMessagesTopicId,
     SuggestedPostParameters? suggestedPostParameters,
+    int? receiverUserId,
+    String? callbackQueryId,
   }) async {
     final params = <String, dynamic>{
       'chat_id': chatId,
@@ -899,6 +925,8 @@ class RawAPI {
       'allow_paid_broadcast': ?allowPaidBroadcast,
       'direct_messages_topic_id': ?directMessagesTopicId,
       'suggested_post_parameters': ?suggestedPostParameters,
+      'receiver_user_id': ?receiverUserId,
+      'callback_query_id': ?callbackQueryId,
     };
 
     final files = _prepareFiles([('animation', animation), (null, thumbnail)]);
@@ -932,6 +960,8 @@ class RawAPI {
     bool? allowPaidBroadcast,
     int? directMessagesTopicId,
     SuggestedPostParameters? suggestedPostParameters,
+    int? receiverUserId,
+    String? callbackQueryId,
   }) async {
     final params = <String, dynamic>{
       'chat_id': chatId,
@@ -950,6 +980,8 @@ class RawAPI {
       'allow_paid_broadcast': ?allowPaidBroadcast,
       'direct_messages_topic_id': ?directMessagesTopicId,
       'suggested_post_parameters': ?suggestedPostParameters,
+      'receiver_user_id': ?receiverUserId,
+      'callback_query_id': ?callbackQueryId,
     };
 
     final files = _prepareFiles([('voice', voice)]);
@@ -988,6 +1020,8 @@ class RawAPI {
     bool? allowPaidBroadcast,
     int? directMessagesTopicId,
     SuggestedPostParameters? suggestedPostParameters,
+    int? receiverUserId,
+    String? callbackQueryId,
   }) async {
     final params = <String, dynamic>{
       'chat_id': chatId,
@@ -1005,6 +1039,8 @@ class RawAPI {
       'allow_paid_broadcast': ?allowPaidBroadcast,
       'direct_messages_topic_id': ?directMessagesTopicId,
       'suggested_post_parameters': ?suggestedPostParameters,
+      'receiver_user_id': ?receiverUserId,
+      'callback_query_id': ?callbackQueryId,
     };
 
     final files = _prepareFiles([('video_note', videoNote), (null, thumbnail)]);
@@ -1041,6 +1077,8 @@ class RawAPI {
     bool? allowPaidBroadcast,
     int? directMessagesTopicId,
     SuggestedPostParameters? suggestedPostParameters,
+    int? receiverUserId,
+    String? callbackQueryId,
   }) async {
     final params = <String, dynamic>{
       'chat_id': chatId,
@@ -1060,6 +1098,8 @@ class RawAPI {
       'allow_paid_broadcast': ?allowPaidBroadcast,
       'direct_messages_topic_id': ?directMessagesTopicId,
       'suggested_post_parameters': ?suggestedPostParameters,
+      'receiver_user_id': ?receiverUserId,
+      'callback_query_id': ?callbackQueryId,
     };
 
     final payload = Payload(params);
@@ -1096,6 +1136,8 @@ class RawAPI {
     bool? allowPaidBroadcast,
     int? directMessagesTopicId,
     SuggestedPostParameters? suggestedPostParameters,
+    int? receiverUserId,
+    String? callbackQueryId,
   }) async {
     final params = <String, dynamic>{
       'chat_id': chatId,
@@ -1117,6 +1159,8 @@ class RawAPI {
       'allow_paid_broadcast': ?allowPaidBroadcast,
       'direct_messages_topic_id': ?directMessagesTopicId,
       'suggested_post_parameters': ?suggestedPostParameters,
+      'receiver_user_id': ?receiverUserId,
+      'callback_query_id': ?callbackQueryId,
     };
 
     final payload = Payload(params);
@@ -1147,6 +1191,8 @@ class RawAPI {
     bool? allowPaidBroadcast,
     int? directMessagesTopicId,
     SuggestedPostParameters? suggestedPostParameters,
+    int? receiverUserId,
+    String? callbackQueryId,
   }) async {
     final params = <String, dynamic>{
       'chat_id': chatId,
@@ -1164,6 +1210,8 @@ class RawAPI {
       'allow_paid_broadcast': ?allowPaidBroadcast,
       'direct_messages_topic_id': ?directMessagesTopicId,
       'suggested_post_parameters': ?suggestedPostParameters,
+      'receiver_user_id': ?receiverUserId,
+      'callback_query_id': ?callbackQueryId,
     };
 
     final payload = Payload(params);
@@ -2940,6 +2988,8 @@ class RawAPI {
     ReplyMarkup? replyMarkup,
     int? directMessagesTopicId,
     SuggestedPostParameters? suggestedPostParameters,
+    int? receiverUserId,
+    String? callbackQueryId,
   }) async {
     final params = <String, dynamic>{
       'chat_id': chatId,
@@ -2955,6 +3005,8 @@ class RawAPI {
       'reply_markup': ?replyMarkup,
       'direct_messages_topic_id': ?directMessagesTopicId,
       'suggested_post_parameters': ?suggestedPostParameters,
+      'receiver_user_id': ?receiverUserId,
+      'callback_query_id': ?callbackQueryId,
     };
 
     final files = _prepareFiles([('sticker', sticker)]);
