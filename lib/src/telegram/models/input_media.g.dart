@@ -28,6 +28,7 @@ const _$InputMediaTypeEnumMap = {
   InputMediaType.venue: 'venue',
   InputMediaType.livePhoto: 'live_photo',
   InputMediaType.link: 'link',
+  InputMediaType.voiceNote: 'voice_note',
 };
 
 Map<String, dynamic> _$InputMediaDocumentToJson(InputMediaDocument instance) =>
@@ -107,3 +108,14 @@ Map<String, dynamic> _$InputMediaVideoToJson(InputMediaVideo instance) =>
         const InputFileConverter().toJson,
       ),
     };
+
+Map<String, dynamic> _$InputMediaVoiceNoteToJson(
+  InputMediaVoiceNote instance,
+) => <String, dynamic>{
+  'type': _$InputMediaTypeEnumMap[instance.type]!,
+  'media': ?const InputFileConverter().toJson(instance.media),
+  'caption': ?instance.caption,
+  'parse_mode': ?instance.parseMode,
+  'caption_entities': ?instance.captionEntities,
+  'duration': ?instance.duration,
+};

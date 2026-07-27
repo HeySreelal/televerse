@@ -23,4 +23,5 @@ const _$InputMediaTypeEnumMap = {
   InputMediaType.venue: 'venue',
   InputMediaType.livePhoto: 'live_photo',
   InputMediaType.link: 'link',
+  InputMediaType.voiceNote: 'voice_note',
 };

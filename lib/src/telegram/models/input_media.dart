@@ -40,6 +40,8 @@ sealed class InputMedia
         cover: final cover,
       ):
         return [media, thumbnail, cover];
+      case InputMediaVoiceNote(media: final media):
+        return [media];
     }
   }
 
@@ -260,6 +262,35 @@ sealed class InputMedia
     /// Optional. Cover for the video in the message.
     @JsonKey(name: 'cover') @InputFileConverter() final InputFile? cover,
   }) = InputMediaVideo;
+
+  /// Represents a voice message file to be sent.
+  const factory InputMedia.voiceNote({
+    /// Type of input media.
+    @JsonKey(name: 'type')
+    @Default(InputMediaType.voiceNote)
+    final InputMediaType type,
+
+    /// The file to send
+    @JsonKey(name: 'media')
+    @InputFileConverter()
+    required final InputFile media,
+
+    /// Optional. Caption of the voice message to be sent, 0-1024 characters after
+    /// entities parsing
+    @JsonKey(name: 'caption') final String? caption,
+
+    /// Optional. Mode for parsing entities in the voice message caption. See
+    /// formatting options for more details.
+    @JsonKey(name: 'parse_mode') final ParseMode? parseMode,
+
+    /// Optional. List of special entities that appear in the caption, which can
+    /// be specified instead of parse_mode
+    @JsonKey(name: 'caption_entities')
+    final List<MessageEntity>? captionEntities,
+
+    /// Optional. Duration of the voice message in seconds
+    @JsonKey(name: 'duration') final int? duration,
+  }) = InputMediaVoiceNote;
 
   factory InputMedia.fromJson(Map<String, Object?> json) =>
       throw Exception("Can't create InputMedia from JSON");
